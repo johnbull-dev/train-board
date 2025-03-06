@@ -2,6 +2,14 @@
 
 A modern web application that provides real-time information about UK train stations and services, built as a personal project to demonstrate my coding style and approach to software development.
 
+## Version Info
+
+# 2025.3.1
+- Basic search using TIPLOC codes
+- Table to show origin of train, destination, platform, arrival time at station and arrival time at final destination 
+- Basic styling
+
+
 ## Project Overview
 
 This application showcases my implementation of a React-based frontend that interacts with the RealTime Trains API to deliver accurate train information. It demonstrates my approach to:
