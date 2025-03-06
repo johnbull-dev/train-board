@@ -8,6 +8,7 @@ A modern web application that provides real-time information about UK train stat
 - Basic search using TIPLOC codes
 - Table to show origin of train, destination, platform, arrival time at station and arrival time at final destination 
 - Basic styling
+- Responsive design
 
 
 ## Project Overview
