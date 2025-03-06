@@ -91,6 +91,9 @@ const StationSearch = () => {
                     Destination
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                    Platform
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                     Origin
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -111,10 +114,13 @@ const StationSearch = () => {
                       {service.locationDetail.destination[0].description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                      {service.locationDetail.platform}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {service.locationDetail.origin[0].description}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                      {service.locationDetail.origin[0].publicTime}
+                      {service.locationDetail.realtimeDeparture}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {service.locationDetail.destination[0].publicTime}
