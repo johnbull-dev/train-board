@@ -29,11 +29,6 @@ describe('StationService', () => {
         });
     });
 
-    afterEach(() => {
-        // Clean up after each test
-        jest.resetAllMocks();
-    });
-
     it('should return the correct station data', async () => {
         const stationData = await fetchStationData('BLY');
         
