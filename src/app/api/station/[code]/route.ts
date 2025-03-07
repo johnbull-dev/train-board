@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
-import { StationData } from '@/services/StationData';
+import { StationData } from '@/types/StationData';
 
 // Mock data for development and testing
 const mockStationData: StationData = {

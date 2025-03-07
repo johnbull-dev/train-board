@@ -4,6 +4,12 @@ A modern web application that provides real-time information about UK train stat
 
 ## Version Info
 
+### 2025.3.2
+- Relocate StationData interfaces to a new /src/types directory
+- Update import statements across components and services
+- Remove unused station name lookup function from stationService
+- Add comprehensive JSDoc comments to improve type documentation
+
 # 2025.3.1
 - Basic search using TIPLOC codes
 - Table to show origin of train, destination, platform, arrival time at station and arrival time at final destination 
