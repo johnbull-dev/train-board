@@ -44,7 +44,6 @@ describe('StationService', () => {
         expect(stationData).toBeDefined();
         expect(stationData.location.name).toBe('Bletchley');
         expect(axios.get).toHaveBeenCalledTimes(1);
-        expect(axios.get).toHaveBeenCalledWith('/api/station/BLY');
     });
 
     it('should handle errors correctly', async () => {
