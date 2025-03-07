@@ -1,4 +1,4 @@
-import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
+import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { fetchStationData } from '../../src/services/stationService';
 import axios from 'axios';
 
@@ -43,11 +43,11 @@ describe('StationService', () => {
 
     it('should handle errors correctly', async () => {
         // Setup axios to simulate an error
-        const errorMessage = 'Network Error';
+        const errorMessage = 'Failed to fetch station data. Please try again.';
         jest.spyOn(axios, 'get').mockRejectedValueOnce(new Error(errorMessage));
         
         // Expect the fetchStationData function to throw an error
-        await expect(fetchStationData('BLY')).rejects.toThrow();
+        await expect(fetchStationData('BLY')).rejects.toThrow(errorMessage);
         expect(axios.get).toHaveBeenCalledWith('/api/station/BLY');
         expect(axios.get).toHaveBeenCalledTimes(1);
 
