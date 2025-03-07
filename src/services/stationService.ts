@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { ErrorResponse, StationData } from './StationData';
-
-
+import { ErrorResponse, StationData } from '../types/StationData';
 
 /**
  * Fetch station data from our server-side API route
@@ -27,29 +25,3 @@ export async function fetchStationData(station: string): Promise<StationData> {
     throw new Error(errorMessage);
   }
 }
-
-export async function lookupStationName(station: string): Promise<string> {
-  try {
-    const fs = require('fs');
-    const lookup = JSON.parse(fs.readFileSync('data/CORPUSExtract.json', 'utf8'));
-    
-    const corpusData = lookup.TIPLOCDATA as CorpusData[];
-    const stationData = corpusData.find((item: CorpusData) => item['3ALPHA'] === station);
-    const stationName = stationData ? stationData['NLCDESC'] : null;
-    
-    if (stationName) {
-      return stationName;
-    } else {
-      throw new Error('Station not found.');
-    }
-    
-  } catch (error) {
-    console.error('Error fetching station name:', error);
-    throw new Error('Failed to fetch station name. Please try again.');
-  }
-}
-
-export type CorpusData = {
-  "3ALPHA": string;
-  "NLCDESC": string;
-};

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { fetchStationData } from '../services/stationService';
-import { StationData, Service } from '../services/StationData';
+import { StationData, Service } from '../types/StationData';
 const StationSearch = () => {
   const [station, setStation] = useState('');
   const [stationData, setStationData] = useState<StationData | null>(null);
