@@ -29,7 +29,7 @@ export interface StationData {
     system: string;
   }
 
-    /**
+  /**
    * Represents a train service
    * @interface Service
    * @property {LocationDetail} locationDetail - Detailed location information
@@ -134,10 +134,11 @@ export interface StationData {
     associatedUid: string;    // e.g. "Y15820"
     associatedRunDate: string; // e.g. "2025-03-05"
   }
-  
-  
+    
   /**
    * Error response type
+   * @type ErrorResponse
+   * @property {string} error - Error message describing what went wrong
    */
   export type ErrorResponse = {
     error: string;
