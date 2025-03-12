@@ -1,9 +1,9 @@
 # Train Bored
 
-I've found that it's hard to find a simple app to show train times for a specific station. I've been travelling on trains for the last 25 years and I've used websites like National Rail Enquiries and Trainline to find train times but now they want to know the origin and destination of the train to sell you a ticket. As an experienced train user I just want to see all the trains departing a station so I can choose which one to get.
+I've found that it's hard to find a simple app to show train times for a specific station. I've been travelling on trains for the last 25 years, and I've used websites like National Rail Enquiries and Trainline to find train times, but now they want to know the origin and destination of the train to sell you a ticket. As an experienced train user I just want to see all the trains departing a station so I can choose which one to get.
 
 ## Feedback
-I've built this app to satisfy my own needs, but if you have any feedback or suggestions then feel free to raise an issue so I can consider incorporating it into the app.
+I've built this app to satisfy my own needs, but if you have any feedback or suggestions, then feel free to raise an issue so I can consider incorporating it into the app.
 
 ## Version Info
 
