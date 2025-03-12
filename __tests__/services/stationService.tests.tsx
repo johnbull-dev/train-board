@@ -1,11 +1,11 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
-import { fetchStationData } from '../../src/services/stationService';
+import { fetchStationData, fetchSuggestedStations } from '../../src/services/stationService';
 import axios from 'axios';
 
 // Mock axios
 jest.mock('axios');
 
-describe('StationService', () => {
+describe('StationService station data ', () => {
     // Mock data that matches the StationData interface
     const mockStationData = {
         location: {
@@ -51,5 +51,57 @@ describe('StationService', () => {
         expect(axios.get).toHaveBeenCalledWith('/api/station/BLY');
         expect(axios.get).toHaveBeenCalledTimes(1);
 
+    });
+});
+
+describe('StationService suggested stations', () => {
+    const mockStationData = [{
+        location: {
+            name: 'Bletchley',
+            crs: 'BLY',
+            tiploc: 'BLTCHLY',
+            country: 'England',
+            system: 'National Rail'
+        },
+        filter: null,
+        services: []
+    }];
+
+
+    
+    it('should return suggested stations', async () => {
+        jest.clearAllMocks();
+        jest.spyOn(axios, 'get').mockResolvedValue({
+            data: mockStationData,
+            status: 200
+        });
+        const suggestedStations = await fetchSuggestedStations('BLY');
+        expect(suggestedStations).toBeDefined();
+         expect(suggestedStations.length).toBeGreaterThan(0);
+    });
+
+    it('should return an empty array if no suggestions are found', async () => {
+        // Setup mock to return empty array
+        jest.clearAllMocks();
+        jest.spyOn(axios, 'get').mockResolvedValue({
+            data: [],
+            status: 200
+        });
+        
+        const suggestedStations = await fetchSuggestedStations('BLY');
+        expect(suggestedStations).toBeDefined();
+        expect(suggestedStations.length).toBe(0);
+        expect(axios.get).toHaveBeenCalledWith('/api/suggestions/BLY');
+        expect(axios.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('should handle errors correctly', async () => {
+        jest.clearAllMocks();
+        jest.spyOn(axios, 'get').mockRejectedValueOnce(new Error('Failed to fetch suggestions'));
+        
+        const result = await fetchSuggestedStations('BLY');
+        expect(result).toEqual([]);
+        expect(axios.get).toHaveBeenCalledWith('/api/suggestions/BLY');
+        expect(axios.get).toHaveBeenCalledTimes(1);
     });
 });
