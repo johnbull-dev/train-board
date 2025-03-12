@@ -7,9 +7,16 @@ I've built this app to satisfy my own needs, but if you have any feedback or sug
 
 ## Version Info
 
+### 2025.3.5
+- Change the search input to be a search dropdown of suggested stations. It shows 10 suggestions at a time.
+- Added a new API route to fetch 10 suggested stations based on the station code or name
+- Added a new test to check the new API route
+
+### 2025.3.4
+- StationService tests now use Jest and mock axios
+
 ### 2025.3.3
 - Added comprehensive test coverage with Jest and React Testing Library
-- StationService tests now use Jest and mock axios
 
 # 2025.3.1
 - Basic search using TIPLOC codes
