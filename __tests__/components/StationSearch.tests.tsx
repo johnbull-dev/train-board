@@ -7,6 +7,6 @@ import StationSearch from '../../src/components/StationSearch'
 describe('StationSearch', () => {
     it('should render', () => {
         render(<StationSearch />)
-        expect(screen.getByText('Train Station Information')).toBeTruthy()
+        expect(screen.getByText('Train Bored - Train Times')).toBeTruthy()
     })
 })  
