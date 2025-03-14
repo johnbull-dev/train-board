@@ -254,7 +254,7 @@ const StationSearch = () => {
       
       {!stationData && !isLoading && !error && (
         <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 text-center">
-          <p className="text-gray-700 text-sm sm:text-base">Enter a station name or code and click Search to view train information.</p>
+          <p className="text-gray-700 text-sm sm:text-base">Enter a station name or code to view train times.</p>
         </div>
       )}
     </div>
