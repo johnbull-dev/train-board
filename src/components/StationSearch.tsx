@@ -118,7 +118,7 @@ const StationSearch = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 bg-gray-50">
       <div className="mb-4 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Train Station Information</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Train Bored - Train Times</h1>
         
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div className="relative flex-grow">
@@ -172,15 +172,7 @@ const StationSearch = () => {
               )}
             </div>
           </div>
-          
-          <button
-            onClick={handleSearch}
-            disabled={isLoading}
-            className="bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-white font-medium px-4 sm:px-6 py-2 rounded-md transition-colors duration-200 disabled:opacity-70"
-            aria-busy={isLoading}
-          >
-            {isLoading ? 'Searching...' : 'Search'}
-          </button>
+
         </div>
         <p id="station-hint" className="text-xs sm:text-sm text-gray-600">Enter a station name or code (e.g. Bournemouth or BMH)</p>
         
@@ -256,7 +248,7 @@ const StationSearch = () => {
           </div>
         </div>
       )}
-      {stationData && (stationData.services === null || stationData.services.length === 0) && (
+      {stationData && (stationData.services === null || stationData.services === undefined || stationData.services.length === 0) && (
         <p className="text-gray-700 italic py-3 sm:py-4 text-sm sm:text-base">No services available for this station.</p>
       )}
       
