@@ -7,6 +7,11 @@ I've built this app to satisfy my own needs, but if you have any feedback or sug
 
 ## Version Info
 
+### 2025.3.6
+- Changed the title to "Train Bored"
+- Modified the condition for displaying the "No services available" message to include undefined return from service
+- Added testing workflow in .github/workflows/testing.yaml
+
 ### 2025.3.5
 - Change the search input to be a search dropdown of suggested stations. It shows 10 suggestions at a time.
 - Added a new API route to fetch 10 suggested stations based on the station code or name
