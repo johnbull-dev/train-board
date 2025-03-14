@@ -1,0 +1,53 @@
+name: Jest Tests
+env:
+  RTT_PASSWORD: ${{ secrets.RTT_PASSWORD }}
+  RTT_USERNAME: ${{ secrets.RTT_USERNAME }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js environment with pnpm caching
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'    # Specify your Node.js version
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: true
+          standalone: true
+          dest: ~/setup-pnpm
+
+      # 4. Verify pnpm installation
+      - name: Verify pnpm Installation
+        run: |
+          pnpm --version
+          which pnpm
+
+      # 5. Install project dependencies using pnpm
+      - name: Install Dependencies
+        run: pnpm install
+
+      # 6. Build your project (if applicable)
+      - name: Build Project
+        run: pnpm build
+
+      # 7. Run your tests
+      - name: Run Tests
+        run: pnpm test
