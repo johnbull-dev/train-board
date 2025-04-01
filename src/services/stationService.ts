@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ErrorResponse, StationData } from "../types/StationData";
+import { TrainLocation } from "../types/TrainLocation";
 
 /**
  * Fetch station data from our server-side API route
@@ -63,5 +64,43 @@ export async function fetchSuggestedStations(
     
     // Return empty array instead of throwing to prevent UI disruption
     return [];
+  }
+}
+
+export interface TrainDetails {
+  serviceUid: string;
+  stops: TrainLocation[];
+}
+
+export async function fetchTrainDetails(serviceUid: string): Promise<TrainDetails> {
+  try {
+    console.log('Fetching train details for service:', serviceUid);
+    const response = await axios.get(`/api/train/${serviceUid}`);
+    
+    if (!response.data) {
+      throw new Error('No data received from server');
+    }
+    
+    return response.data as TrainDetails;
+  } catch (error) {
+    console.error("Error fetching train details:", error);
+
+    let errorMessage = "Failed to fetch train details. Please try again.";
+
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error details:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message
+      });
+
+      if (error.response?.status === 404) {
+        errorMessage = "Train service not found. The service may have ended or been cancelled.";
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 }

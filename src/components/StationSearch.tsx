@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { fetchStationData, fetchSuggestedStations } from '../services/stationService';
 import { StationData, Service } from '../types/StationData';
 import { StationSuggestion } from '../types/StationSuggestion';
+import Link from 'next/link';
 
 const StationSearch = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -223,7 +224,12 @@ const StationSearch = () => {
                       {service.atocName}
                     </td>
                     <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-700">
-                      {service.locationDetail.destination[0].description}
+                      <Link 
+                        href={`/train/${service.serviceUid}`}
+                        className="text-green-600 hover:text-green-800 hover:underline"
+                      >
+                        {service.locationDetail.destination[0].description}
+                      </Link>
                     </td>
                     <td className="px-3 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-700">
                       {service.locationDetail.platform}
