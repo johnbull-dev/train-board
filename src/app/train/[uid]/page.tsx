@@ -20,23 +20,31 @@ const getTrainStatus = (stop: TrainLocation, index: number, stops: TrainLocation
     realtimeArrivalActual: stop.realtimeArrivalActual,
     realtimeDepartureActual: stop.realtimeDepartureActual,
     realtimeArrival: stop.realtimeArrival,
-    realtimeDeparture: stop.realtimeDeparture
+    realtimeDeparture: stop.realtimeDeparture,
+    isFirstStation: index === 0
   });
 
-  // If the train has both arrived and departed
+  // Special handling for the first station (origin)
+  if (index === 0) {
+    if (stop.realtimeDepartureActual === true) {
+      return 'Passed';
+    } else if (stop.realtimeDepartureActual === false) {
+      return 'At Station';
+    }
+    return '';
+  }
+
+  // For all other stations
   if (stop.realtimeArrivalActual === true && stop.realtimeDepartureActual === true) {
     return 'Passed';
   }
   
-  // If the train has arrived but not departed
   if (stop.realtimeArrivalActual === true && stop.realtimeDepartureActual !== true) {
     return 'At Station';
   }
   
-  // If the train hasn't arrived yet
   if (stop.realtimeArrivalActual !== true) {
-    // Check if we've passed any stations
-    const hasPassedAnyStation = stops.some(s => s.realtimeArrivalActual === true);
+    const hasPassedAnyStation = stops.some(s => s.realtimeDepartureActual === true);
     if (hasPassedAnyStation) {
       return 'En Route';
     }
@@ -44,6 +52,14 @@ const getTrainStatus = (stop: TrainLocation, index: number, stops: TrainLocation
   
   return '';
 };
+
+// Update the PulsingDot component to remove the line
+const PulsingDot = () => (
+  <div className="relative">
+    <div className="absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75 animate-ping"></div>
+    <div className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></div>
+  </div>
+);
 
 export default function TrainDetailsPage() {
   const params = useParams();
@@ -132,26 +148,30 @@ export default function TrainDetailsPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white">
               {trainDetails.stops.map((stop, index) => {
                 const status = getTrainStatus(stop, index, trainDetails.stops);
                 console.log('Status for', stop.description, ':', status);
                 return (
-                  <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      {status === 'Passed' && (
-                        <span className="text-gray-500 text-lg">✓</span>
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm relative">
+                      {index !== 0 && (
+                        <div className="absolute left-1/2 top-0 w-[2px] bg-green-700 -translate-x-1/2" style={{ height: '50%' }}></div>
                       )}
-                      {status === 'At Station' && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          At Station
-                        </span>
+                      {index !== trainDetails.stops.length - 1 && (
+                        <div className="absolute left-1/2 bottom-0 w-[2px] bg-green-700 -translate-x-1/2" style={{ height: '50%' }}></div>
                       )}
-                      {status === 'En Route' && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          En Route
-                        </span>
-                      )}
+                      <div className="relative flex justify-center">
+                        {status === 'Passed' && (
+                          <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                        )}
+                        {status === 'At Station' && (
+                          <PulsingDot />
+                        )}
+                        {status === 'En Route' && (
+                          <div className="h-3 w-3 rounded-full border-2 border-green-500 bg-white"></div>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {stop.description}
