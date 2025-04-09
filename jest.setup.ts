@@ -52,4 +52,11 @@ jest.mock('next/server', () => ({
       return response;
     }
   }
-})); 
+}));
+
+// Add Next.js API route types
+declare module 'next/server' {
+  interface NextRequestContext {
+    params: { [key: string]: string };
+  }
+} 

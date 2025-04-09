@@ -4,9 +4,10 @@ import { TrainLocation } from '@/types/TrainLocation';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { uid: string } }
+  { params }: { params: Promise<{ uid: string }> }
 ) {
-  const serviceUid = params.uid;
+  const resolvedParams = await Promise.resolve(params);
+  const serviceUid = resolvedParams.uid;
   console.log('Fetching train details for service UID:', serviceUid);
 
   if (!serviceUid) {
