@@ -96,7 +96,6 @@ export async function GET(
   const useMockData = process.env.USE_MOCK_DATA === 'true';
   
   if (useMockData) {
-    console.log('Using mock data for station:', stationCode);
     return NextResponse.json({
       ...mockStationData,
       location: {

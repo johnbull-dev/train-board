@@ -1,0 +1,94 @@
+# Cursor AI Rules
+# This file contains rules and preferences for Cursor AI assistant
+
+# Language Preferences
+language: English International
+
+# Package Manager
+package_manager: pnpm
+
+# Code Style
+indent: 2
+max_line_length: 100
+
+# Testing
+test_framework: jest
+test_location: __tests__
+
+# Testing Frameworks
+testing:
+  unit:
+    framework: jest
+    library: @testing-library/react
+    location: __tests__
+    naming: "*.test.ts(x)"
+  e2e:
+    framework: playwright
+    library: @testing-library/playwright
+    location: __e2e__
+    naming: "*.spec.ts"
+    config: playwright.config.ts
+
+# File Organization
+organize_tests: true
+test_subfolders:
+  - api
+  - components
+  - pages
+  - services
+
+# HTTP Client
+http_client: axios
+test_http_mocking:
+  - use_axios_mock: true
+  - mock_structure: |
+    jest.mock('axios');
+    const mockedAxios = axios as jest.Mocked<typeof axios>;
+  - error_mock_structure: |
+    {
+      isAxiosError: true,
+      response: { 
+        status: number,
+        data: { message: string }
+      }
+    }
+
+# TypeScript Documentation
+typescript_docs:
+  services_and_helpers:
+    require_param_comments: true
+    require_return_comments: true
+    require_description: true
+    format: |
+      /**
+       * Description of what the function does
+       * @param {Type} paramName - Description of the parameter
+       * @returns {Type} Description of what is returned
+       * @throws {ErrorType} Description of when this error is thrown
+       * @example
+       * ```typescript
+       * const result = functionName(param);
+       * ```
+       */
+    locations:
+      - src/services
+      - src/helpers
+      - src/utils
+      - src/lib
+
+# Custom Rules
+# Add your custom rules below in the format:
+# rule_name: value
+# Example:
+# use_typescript: true
+# prefer_functional: true
+
+# Documentation
+require_comments: true
+comment_style: JSDoc
+
+# Error Handling
+error_handling: explicit
+error_messages: user_friendly
+
+# Add your custom rules below this line 
