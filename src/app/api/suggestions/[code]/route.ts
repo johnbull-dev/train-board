@@ -18,7 +18,6 @@ export async function GET(
     // In Next.js 15, params can be a Promise
     const resolvedParams = await Promise.resolve(params);
     const stationCode = resolvedParams.code;
-    console.log(`Searching for stations with query: ${stationCode}`);
     
     const supabase = createClient(
       process.env.SUPABASE_URL,
@@ -35,7 +34,6 @@ export async function GET(
       .limit(10);
     
     if (error) {
-      console.error('Supabase query error:', error);
       return NextResponse.json(
         { error: `Database query error: ${error.message}` },
         { status: 500 }
@@ -43,7 +41,7 @@ export async function GET(
     }
     
     if (!data || data.length === 0) {
-      console.log('No stations found matching the query');
+   
       return NextResponse.json([]);
     }
    
@@ -55,7 +53,6 @@ export async function GET(
     
     return NextResponse.json(transformedData);
   } catch (error) {
-    console.error('Error in suggestions API:', error);
     return NextResponse.json(
       { error: 'Failed to fetch suggestions. Please try again.' },
       { status: 500 }

@@ -8,7 +8,6 @@ export async function GET(
 ) {
   const resolvedParams = await Promise.resolve(params);
   const serviceUid = resolvedParams.uid;
-  console.log('Fetching train details for service UID:', serviceUid);
 
   if (!serviceUid) {
     return NextResponse.json(
@@ -56,7 +55,6 @@ export async function GET(
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
 
-    console.log('Making request to RTT API for service:', serviceUid);
     const response = await axios.get(`https://api.rtt.io/api/v1/json/service/${serviceUid}/${year}/${month}/${day}`, {
       auth: {
         username,
@@ -64,7 +62,6 @@ export async function GET(
       }
     });
 
-    console.log('Received response from RTT API');
     
     if (!response.data || !response.data.locations) {
       console.error('Invalid response format from RTT API:', response.data);

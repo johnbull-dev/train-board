@@ -74,7 +74,6 @@ export interface TrainDetails {
 
 export async function fetchTrainDetails(serviceUid: string): Promise<TrainDetails> {
   try {
-    console.log('Fetching train details for service:', serviceUid);
     const response = await axios.get(`/api/train/${serviceUid}`);
     
     if (!response.data) {
@@ -83,16 +82,10 @@ export async function fetchTrainDetails(serviceUid: string): Promise<TrainDetail
     
     return response.data as TrainDetails;
   } catch (error) {
-    console.error("Error fetching train details:", error);
 
     let errorMessage = "Failed to fetch train details. Please try again.";
 
     if (axios.isAxiosError(error)) {
-      console.error('Axios error details:', {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message
-      });
 
       if (error.response?.status === 404) {
         errorMessage = "Train service not found. The service may have ended or been cancelled.";
