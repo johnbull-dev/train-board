@@ -16,7 +16,14 @@ const formatTime = (time: string | undefined): string => {
 
 // Helper function to determine train status
 const getTrainStatus = (stop: TrainLocation, index: number, stops: TrainLocation[]): string => {
-  
+  console.log('Checking status for stop:', stop.description, {
+    realtimeArrivalActual: stop.realtimeArrivalActual,
+    realtimeDepartureActual: stop.realtimeDepartureActual,
+    realtimeArrival: stop.realtimeArrival,
+    realtimeDeparture: stop.realtimeDeparture,
+    isFirstStation: index === 0
+  });
+
   // Special handling for the first station (origin)
   if (index === 0) {
     if (stop.realtimeDepartureActual === true) {
@@ -59,6 +66,15 @@ export default function TrainDetailsPage() {
   const [trainDetails, setTrainDetails] = useState<TrainDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastSearchedStation, setLastSearchedStation] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Get the last searched station from localStorage
+    const savedStation = localStorage.getItem('lastSearchedStation');
+    if (savedStation) {
+      setLastSearchedStation(savedStation);
+    }
+  }, []);
 
   useEffect(() => {
     const loadTrainDetails = async () => {
@@ -107,7 +123,7 @@ export default function TrainDetailsPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-6">
         <Link 
-          href="/"
+          href={lastSearchedStation ? `/?station=${lastSearchedStation}` : '/'}
           className="text-green-600 hover:text-green-800 flex items-center"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,6 +160,7 @@ export default function TrainDetailsPage() {
             <tbody className="bg-white">
               {trainDetails.stops.map((stop, index) => {
                 const status = getTrainStatus(stop, index, trainDetails.stops);
+                console.log('Status for', stop.description, ':', status);
                 return (
                   <tr key={index}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm relative">

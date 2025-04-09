@@ -7,6 +7,9 @@ I've built this app to satisfy my own needs, but if you have any feedback or sug
 
 ## Version Info
 
+### 2025.4.2
+- Added functionality to remember the station I was last viewing and then returning the user to that station when they go back.
+
 ### 2025.4.1
 - Added a new API route to fetch 10 suggested stations based on the station code or name
 - Added a new test to check the new API route 
