@@ -7,6 +7,11 @@ I've built this app to satisfy my own needs, but if you have any feedback or sug
 
 ## Version Info
 
+### 2025.4.1
+- Added a new API route to fetch 10 suggested stations based on the station code or name
+- Added a new test to check the new API route 
+- Added page to show each train's details and progress along the route that it is currently on
+
 ### 2025.3.6
 - Changed the title to "Train Bored"
 - Modified the condition for displaying the "No services available" message to include undefined return from service
