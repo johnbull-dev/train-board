@@ -84,7 +84,7 @@ export default function TrainDetailsPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div role="status" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-center items-center">
           <div className="animate-spin h-8 w-8 border-4 border-green-500 rounded-full border-t-transparent"></div>
         </div>
@@ -163,13 +163,15 @@ export default function TrainDetailsPage() {
                       )}
                       <div className="relative flex justify-center">
                         {status === 'Passed' && (
-                          <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                          <div data-testid={`status-dot-${index}`} className="h-3 w-3 rounded-full bg-green-500"></div>
                         )}
                         {status === 'At Station' && (
-                          <PulsingDot />
+                          <div data-testid={`status-dot-${index}`}>
+                            <PulsingDot />
+                          </div>
                         )}
                         {status === 'En Route' && (
-                          <div className="h-3 w-3 rounded-full border-2 border-green-500 bg-white"></div>
+                          <div data-testid={`status-dot-${index}`} className="h-3 w-3 rounded-full border-2 border-green-500 bg-white"></div>
                         )}
                       </div>
                     </td>
