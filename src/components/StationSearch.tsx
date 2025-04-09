@@ -4,8 +4,10 @@ import { fetchStationData, fetchSuggestedStations } from '../services/stationSer
 import { StationData, Service } from '../types/StationData';
 import { StationSuggestion } from '../types/StationSuggestion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const StationSearch = () => {
+  const searchParams = useSearchParams();
   const [searchInput, setSearchInput] = useState('');
   const [selectedStation, setSelectedStation] = useState('');
   const [stationData, setStationData] = useState<StationData | null>(null);
@@ -16,6 +18,47 @@ const StationSearch = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Check for saved search query in localStorage or URL params
+  useEffect(() => {
+    // First check URL params (for when returning from train details page)
+    const stationParam = searchParams?.get('station');
+    
+    if (stationParam) {
+      // If we have a station in the URL, use it
+      setSearchInput(stationParam);
+      setSelectedStation(stationParam);
+      
+      // Perform the search
+      fetchStationData(stationParam)
+        .then(data => {
+          setStationData(data);
+          setError(null);
+        })
+        .catch(error => {
+          console.error('Error fetching station data:', error);
+          setError(error instanceof Error ? error.message : 'Failed to fetch station data. Please try again.');
+        });
+    } else {
+      // Otherwise check localStorage
+      const savedStation = localStorage.getItem('lastSearchedStation');
+      if (savedStation) {
+        setSearchInput(savedStation);
+        setSelectedStation(savedStation);
+        
+        // Perform the search
+        fetchStationData(savedStation)
+          .then(data => {
+            setStationData(data);
+            setError(null);
+          })
+          .catch(error => {
+            console.error('Error fetching station data:', error);
+            setError(error instanceof Error ? error.message : 'Failed to fetch station data. Please try again.');
+          });
+      }
+    }
+  }, [searchParams]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -50,6 +93,9 @@ const StationSearch = () => {
       setStationData(data);
       setSuggestedStations([]);
       setIsDropdownOpen(false);
+      
+      // Save the search query to localStorage
+      localStorage.setItem('lastSearchedStation', selectedStation);
     } catch (error) {
       console.error('Error fetching station data:', error);
       setError(error instanceof Error ? error.message : 'Failed to fetch station data. Please try again.');
@@ -99,6 +145,9 @@ const StationSearch = () => {
       .then(data => {
         setStationData(data);
         setError(null);
+        
+        // Save the search query to localStorage
+        localStorage.setItem('lastSearchedStation', suggestion.code);
       })
       .catch(error => {
         console.error('Error fetching station data:', error);
